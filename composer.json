@@ -1,0 +1,23 @@
+{
+    "name": "itdeveloperpl/orderus",
+    "description": "Turn game for Emag recruitment test",
+    "type": "project",
+    "require-dev": {
+        "symfony/var-dumper": "^5.1"
+    },
+    "authors": [
+        {
+            "name": "Bartosz Bielecki",
+            "email": "bartosz@itdeveloper.pl"
+        }
+    ],
+    "require": {
+        "symfony/console": "^5.1",
+        "illuminate/collections": "^8.4"
+    },
+    "autoload": {      
+        "psr-4": {
+            "itdeveloperpl\\Orderus\\": "itdeveloperpl/src/Orderus"
+        }
+    }
+}
