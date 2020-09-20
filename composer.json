@@ -1,6 +1,6 @@
 {
     "name": "itdeveloperpl/orderus",
-    "description": "Turn game for Emag recruitment test",
+    "description": "Turn simulation of battle between two characters",
     "type": "project",
     "require-dev": {
         "symfony/var-dumper": "^5.1"

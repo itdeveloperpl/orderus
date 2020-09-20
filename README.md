@@ -1,6 +1,6 @@
 # Orderus
 
-It is a simulation of battle application between two chracters.
+It's a turn simulation of battle between two characters.
 ## Requirements
 - PHP >= 7.3
 - Composer >= 1.10

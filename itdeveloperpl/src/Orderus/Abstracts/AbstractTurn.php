@@ -18,6 +18,7 @@ abstract class AbstractTurn implements Turnable
 
     protected $striker;
     protected $defender;
+    protected $damage;
 
     public function setPlayers(Playerable $striker, Playerable $defender)
     {
@@ -42,6 +43,17 @@ abstract class AbstractTurn implements Turnable
         return $this->striker;
     }
 
+    public function getDamage()
+    {
+        return $this->damage;
+    }
+
+    public function setDamage(int $damage)
+    {
+        $this->damage = $damage;
+        return $this;
+    }
+
     /**
      * @return @void
      */
@@ -61,6 +73,18 @@ abstract class AbstractTurn implements Turnable
         $striker->skills()->transform(function($skill, $key) use ($striker, $defender, $turn) {
             return $skill->setTurn($turn)->afterStrike($striker, $defender);
         });
+
+        $this->updateHealthParams($defender);
+    }
+
+    protected function updateHealthParams(Playerable $defender)
+    {
+        $health = $defender->properties()->getProperty('health');
+        $newHealth = max(0, ($health->get() - $this->damage));
+        if ($this->damage > 0) {
+            $health->update($newHealth);
+            $this->getGame()->notify(sprintf("<fg=red>%s got hit and looses %d of health</>", $defender->name(), $this->damage));
+        }
     }
 
     /**
@@ -82,12 +106,7 @@ abstract class AbstractTurn implements Turnable
         $health = $defender->properties()->getProperty('health');
 
         if ($strength && $defence) {
-            $damage = max(0, ( $strength->get() - $defence->get()));
-            $newHeath = max(0, ($health->get() - $damage));
-            if ($damage > 0) {
-                $health->update($newHeath);
-                $this->getGame()->notify(sprintf("<fg=red>%s got hit and looses %d of health</>", $defender->name(), $damage));
-            }
+            $this->damage = max(0, ( $strength->get() - $defence->get()));
         }
     }
 
